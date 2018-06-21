@@ -1,13 +1,3 @@
-### LECTURA DE LES DADES
-
-dades<-read.csv('F:/TFG/Dades/dades.csv')
-
-dades$group<-factor(dades$group,levels=levels(dades$group)[c(4,3,2,1)])
-dades$failure1c<-factor(dades$failure1c,levels=levels(dades$failure1c)[c(1,3,2)])
-dades$failure5c<-factor(dades$failure5c,levels=levels(dades$failure5c)[c(1,4,2,3)])
-colnames(dades)[18:32]<-c("TNFa","IL_6","IL_8","MCP_1","IP_10","MIP_1b","G_CSF","GM_CSF","IL_10","IL_1ra","IFNg","Eotaxin","IL_17a","IL_7","HNA2")
-attach(dades)
-
 ### PAQUETS
 library(ggplot2)
 library(reshape2)
@@ -57,7 +47,7 @@ ggplot(marcadors.m2,aes(x=variable,y=value,fill=group)) + geom_boxplot(notch=FAL
   xlab ("") + ylab ("")
 
 
-#### TRANSFORMACIÓ DELS MARCADORS
+#### TRANSFORMACIÃ“ DELS MARCADORS
 
 bbddmarkers<-cbind(dades[,2],log(dades[,21:34]),dades[,35])
 colnames(bbddmarkers)<-c("group","logTNFa","logIL_6","logIL_8","logMCP_1","logIP_10","logMIP_1b",
@@ -128,7 +118,7 @@ ggplot(marcadors.m2,aes(x=variable,y=value,fill=group)) + geom_boxplot(notch=FAL
   xlab ("") + ylab ("")
 
 
-#### ANÀLISI DELS MARCADORS D'INFLAMACIÓ
+#### ANÃ€LISI DELS MARCADORS D'INFLAMACIÃ“
 
 # HEATMAP SEGONS EL GRUP DE PACIENT AMB VALORS INDIVIDUALS
 
@@ -235,7 +225,7 @@ text(x=0.8799546,y=0.8608905,
 )
 
 
-# ANÀLISI DE L'AGRUPACIÓ NATURAL DELS PACIENTS (grup de pacient)
+# ANÃ€LISI DE L'AGRUPACIÃ“ NATURAL DELS PACIENTS (grup de pacient)
 
 windows()
 heatmap.3(t(m), col=colorRampPalette(colors = c("darkturquoise","white","red"))(100), scale="row",
@@ -251,7 +241,7 @@ table(hclusters,bbddheatmap1$group)
 
 
 
-# HEATMAP SEGONS FALLIDES ORGÀNIQUES EN AD AMB VALORS INDIVIDUALS
+# HEATMAP SEGONS FALLIDES ORGÃ€NIQUES EN AD AMB VALORS INDIVIDUALS
 
 bbddheatmap2<-cbind(bbddmarkers,failure1c=dades$failure1c)
 bbddheatmap2<-bbddheatmap2[c(which(bbddheatmap2$group=='AD'),which(bbddheatmap2$group=='ACLF')),]
@@ -391,7 +381,7 @@ text(x=0.6633677,y=0.8334936,
      font=2
 )
 
-# ANÀLISI DE L'AGRUPACIÓ NATURAL DELS PACIENTS (fallides AD)
+# ANÃ€LISI DE L'AGRUPACIÃ“ NATURAL DELS PACIENTS (fallides AD)
 
 
 windows()
@@ -575,7 +565,7 @@ text(x=0.8868865,y=0.7935076,
 )
 
 
-# ANÀLISI DE L'AGRUPACIÓ NATURAL DELS PACIENTS (grup de pacient)
+# ANÃ€LISI DE L'AGRUPACIÃ“ NATURAL DELS PACIENTS (grup de pacient)
 
 windows()
 heatmap.3(t(m), col=colorRampPalette(colors = c("darkturquoise","white","red"))(100), scale="row",
@@ -590,7 +580,7 @@ hclusters <- cutree(h, 4)
 table(hclusters,bbddheatmap3$failure5c)
 
 
-### ANÀLISI DE SUPERVIVÈNCIA
+### ANÃ€LISI DE SUPERVIVÃˆNCIA
 
 bbdd_survival<-dades[,c(2,33,34,18:32,35:40)]
 bbdd_survival<-subset(bbdd_survival,group %in% c('AD','ACLF'))
@@ -603,7 +593,7 @@ attach(bbdd_survival)
 table(bbdd_survival$group,bbdd_survival$morttxcen_90dM)
 round(prop.table(table(bbdd_survival$group,bbdd_survival$morttxcen_90dM),1)*100,2)
 
-# corbes d'incidència acumulada
+# corbes d'incidÃ¨ncia acumulada
 
 cic_90d<-cuminc(timecomprisks_90days,morttxcen_90dM,bbdd_survival$group,cencode="Censured")
 timepoints(cic_90d,times=c(30,60,90))
@@ -637,7 +627,7 @@ model_FG<-FGR(Hist(timecomprisks_90days,morttxcen_90dM,cens.code = "Censured")~g
               y=TRUE,data=bbdd_survival)
 
 
-# Avaluació del supòsit de Riscos Proporcionals
+# AvaluaciÃ³ del supÃ²sit de Riscos Proporcionals
   
   #plot
   windows()
@@ -665,7 +655,7 @@ attach(bbdd_survival)
 table(bbdd_survival$fail1,bbdd_survival$morttxcen_90dM)
 round(prop.table(table(bbdd_survival$fail1,bbdd_survival$morttxcen_90dM),1)*100,2)
 
-# corbes d'incidència acumulada
+# corbes d'incidÃ¨ncia acumulada
 
 cic_90d_f1<-cuminc(timecomprisks_90days,morttxcen_90dM,fail1,cencode="Censured")
 timepoints(cic_90d_f1,times=c(30,60,90))
@@ -710,7 +700,7 @@ coxm_f1_d<-coxph(Y~bbdd_survival$fail1)
 model_FG_f1<-FGR(Hist(timecomprisks_90days,morttxcen_90dM,cens.code = "Censured")~fail1,cause="Dead",
                  y=TRUE,data=bbdd_survival)
 
-# Avaluació del supòsit de Riscos Proporcionals
+# AvaluaciÃ³ del supÃ²sit de Riscos Proporcionals
 
   #plot
   windows()
@@ -733,7 +723,7 @@ bbdd_survival2<-subset(bbdd_survival,bbdd_survival$failure5c %in% c('LF only','R
 table(bbdd_survival2$failure5c,bbdd_survival2$morttxcen_90dM)
 round(prop.table(table(bbdd_survival2$failure5c,bbdd_survival2$morttxcen_90dM),1)*100,2)
 
-# corbes d'incidència acumulada
+# corbes d'incidÃ¨ncia acumulada
 
 cic_90d_f2<-cuminc(bbdd_survival2$timecomprisks_90days,bbdd_survival2$morttxcen_90dM,bbdd_survival2$failure5c,cencode="Censured")
 timepoints(cic_90d_f2,times=c(30,60,90))
@@ -782,7 +772,7 @@ coxm_f2_d<-coxph(Y~bbdd_survival2$failure5c)
 model_FG_f2<-FGR(Hist(timecomprisks_90days,morttxcen_90dM,cens.code = "Censured")~failure5c,cause="Dead",
                  y=TRUE,data=bbdd_survival2)
 
-#Avaluació del supòsit de Riscos Proporcionals
+#AvaluaciÃ³ del supÃ²sit de Riscos Proporcionals
 
   #plot
   windows()
@@ -799,7 +789,7 @@ model_FG_f2<-FGR(Hist(timecomprisks_90days,morttxcen_90dM,cens.code = "Censured"
   cox.zph(coxm_f2_d)
 
   
-# MORTALITAT EN FUNCIÓ DEL CONJUNT DE MARCADORS D'INFLAMACIÓ
+# MORTALITAT EN FUNCIÃ“ DEL CONJUNT DE MARCADORS D'INFLAMACIÃ“
   
 bbddmarkers_survival<-cbind(bbddmarkers,timecomprisks_90days=dades$timecomprisks_90days,morttxcen_90dM=dades$morttxcen_90dM)
 bbddmarkers_survival<-subset(bbddmarkers_survival,group %in% c('AD','ACLF'))
