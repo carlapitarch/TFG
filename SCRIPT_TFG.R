@@ -1,4 +1,4 @@
-### PAQUETS
+#### PAQUETS
 library(ggplot2)
 library(reshape2)
 
@@ -12,6 +12,10 @@ library(cmprsk)
 library(riskRegression)
 library(pec)
 library(crrstep)
+
+#### LECTURA DADES
+
+dades<-read.csv('dades.csv')
 
 #### BOXPLOTS MARCADORS
 
