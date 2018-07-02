@@ -53,7 +53,7 @@ ggplot(marcadors.m2,aes(x=variable,y=value,fill=group)) + geom_boxplot(notch=FAL
 
 #### TRANSFORMACIÓ DELS MARCADORS
 
-bbddmarkers<-cbind(dades[,2],log(dades[,21:34]),dades[,35])
+bbddmarkers<-cbind(dades[,2],log(dades[,18:31]),dades[,32])
 colnames(bbddmarkers)<-c("group","logTNFa","logIL_6","logIL_8","logMCP_1","logIP_10","logMIP_1b",
                          "logG_CSF","logGM_CSF","logIL_10","logIL_1ra","logIFNg","logEotaxin","logIL_17a",
                          "logIL_7","HNA2")
